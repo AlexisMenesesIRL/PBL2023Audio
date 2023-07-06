@@ -3,6 +3,8 @@
 <div id="result-div"></div>
 
 <script>
+
+  const serverConnection = new WebSocket("wss://"+window.location.host+"/command");
   const startBtn = document.querySelector('#start-btn');
   const stopBtn = document.querySelector('#stop-btn');
   const resultDiv = document.querySelector('#result-div');
@@ -22,6 +24,7 @@
       let transcript = event.results[i][0].transcript;
       if (event.results[i].isFinal) {
         finalTranscript = transcript;
+        serverConnection.send(JSON.stringify({finalTranscript}))
       } else {
         interimTranscript = transcript;
       }
